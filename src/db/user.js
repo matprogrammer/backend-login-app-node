@@ -62,8 +62,11 @@ function register (req, res) {
                         req.body.password = encrypted
                         const user = new User(req.body);
                         user.save(function(err, us) {
-                            if (err) return console.error(err);
-                            console.log("User registered succussfully!" + us.name);
+                            if (err) {
+                                res.status(404).json({ message: 'Error saving user' });
+                            } else {
+                                res.json({success: true, user: user});
+                            }
                         });
                     } else {
                         res.status(404).send({ message: 'Error encrypting password' });

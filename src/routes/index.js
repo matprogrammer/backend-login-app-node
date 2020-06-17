@@ -28,7 +28,7 @@ router.get('/login', async (req, res) => {
 router.post('/register', function (req, res) {
   const email = req.body.email;
   if (email) {
-    userDb.register(req, res)
+        userDb.register(req, res)
     } else {
         res.status(400).send({ message: 'Param email is required' });
     }
