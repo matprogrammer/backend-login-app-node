@@ -20,12 +20,10 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', indexRoutes);
+app.use(express.static("public"));
 
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, '../app/src', 'app.js'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(app.get('port'), () => {
