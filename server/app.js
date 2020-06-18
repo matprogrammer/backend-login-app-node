@@ -24,8 +24,8 @@ app.use('/', indexRoutes);
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', '../app/public/index.html'));
+app.get('/', (req, res) => {
+  res.sendfile(path.join(__dirname, '../app/public', 'index.html'));
 });
 
 app.listen(app.get('port'), () => {
