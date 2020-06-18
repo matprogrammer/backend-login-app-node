@@ -1,13 +1,14 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-function getUsers(res) {
+function getUsers(req, res) {
     try {
         User.find(function (err, users) {
             if (err) {
                 return res.status(404).send({ message: 'El usuario no existe!' });
             } else {
-                return res.json(users);
+                return res.send(users);
             }
         });
     } catch (err) {
@@ -29,13 +30,15 @@ function getUser(id, res) {
     }
 }
 
-function login(email, password, res) {
+function login(email, password, req, res) {
     try {
         User.findOne({ "email": email}, function (err, user) {
             if (user != undefined) {
                 bcrypt.compare(password, user.password, function(err, match) {
                     if (match) {
-                        return res.json({success: true, user: user});
+                        const payload = { username: user.username };
+                        const token = jwt.sign(payload, req.app.get('key'), { expiresIn: 60 * 60 * 24 });
+                        res.json({success: true, user: user, token: token});
                     } else {
                       return res.json({success: false, message: 'La contraseña es incorrecta.'});
                     }
