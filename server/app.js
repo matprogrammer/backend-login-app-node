@@ -22,8 +22,8 @@ app.use(bodyParser.json());
 app.use('/', indexRoutes);
 
 app.use(express.static(__dirname));
-app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../app/public/index.html'));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../app/src/app.js'));
 })
 
 app.listen(app.get('port'), () => {
