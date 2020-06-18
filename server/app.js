@@ -25,7 +25,7 @@ app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, '../app/public', 'index.html'));
+  res.sendfile(path.join(__dirname, '../app/src', 'app.js'));
 });
 
 app.listen(app.get('port'), () => {
