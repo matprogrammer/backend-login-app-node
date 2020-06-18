@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const config = require('./config/config');
 const indexRoutes = require('./routes/index')
 const uri = "mongodb+srv://socialdb:maguiar14@socialdb-tt3eo.gcp.mongodb.net/socialdb?retryWrites=true&w=majority";
+const path = require('path');
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -19,6 +20,13 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', indexRoutes);
+
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', '../app/public/index.html'));
+});
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
