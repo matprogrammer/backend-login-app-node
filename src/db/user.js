@@ -62,17 +62,19 @@ function register (req, res) {
             } else {
                 bcrypt.hash(req.body.password, 10, (err, encrypted) => {
                     if (!err) {
-                        req.body.password = encrypted
+                        req.body.password = encrypted;
                         const user = new User(req.body);
-                        user.save(function(err, us) {
+                        const payload = { username: user.username };
+                        const token = jwt.sign(payload, req.app.get('key'), { expiresIn: 60 * 60 * 24 });
+                        user.save(function(err, user) {
                             if (err) {
                                 return res.status(404).json({ message: 'Ups! Ocurrió un error al crear el usuario.' });
                             } else {
-                                return res.json({success: true, user: user});
+                                return res.json({success: true, user: user, token: token});
                             }
                         });
                     } else {
-                        return res.status(404).send({ message: 'Error encrypting password.' });
+                        return res.status(404).send({ message: 'Error al encriptar el password.' });
                     }
 
                 })
