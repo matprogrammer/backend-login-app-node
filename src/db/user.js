@@ -5,9 +5,9 @@ function getUsers(res) {
     try {
         User.find(function (err, users) {
             if (err) {
-                res.status(404).send({ message: 'User not exists' });
+                return res.status(404).send({ message: 'El usuario no existe!' });
             } else {
-                res.json(users);
+                return res.json(users);
             }
         });
     } catch (err) {
@@ -19,13 +19,13 @@ function getUser(id, res) {
     try {
         User.findById(id, function (err, user) {
             if (err) {
-                res.status(404).send({ message: 'User not exists' });
+                return res.status(404).send({ message: 'El usuario no existe!' });
             } else {
-                res.json(user);
+                return res.json(user);
             }
         });
     } catch (err) {
-        res.status(500).send({ message: 'Internal server error' });
+        return res.status(500).send({ message: 'Internal server error' });
     }
 }
 
@@ -37,13 +37,13 @@ function login(email, password, res) {
                     if (match) {
                         return res.json({success: true, user: user});
                     } else {
-                      return res.json({success: false, message: 'passwords do not match'});
+                      return res.json({success: false, message: 'La contraseña es incorrecta.'});
                     }
                   });
             } else if (err) {
-                res.status(404).send({ message: 'User not exists' });
+                return res.status(404).send({ message: 'El usuario no existe!' });
             } else {
-                res.status(404).send({ message: 'User or password incorrect' });
+                return res.status(404).send({ message: 'Email o contraseña incorrecta.' });
             }
         });
     } catch (err) {
@@ -55,7 +55,7 @@ function register (req, res) {
     try {
         User.find({ "email": req.body.email}, function (err, user) {
             if (user.length > 0) {
-                res.status(404).send({ message: 'Email in use' });
+                return res.status(404).send({ message: 'El email ya esta regsitrado.' });
             } else {
                 bcrypt.hash(req.body.password, 10, (err, encrypted) => {
                     if (!err) {
@@ -63,20 +63,20 @@ function register (req, res) {
                         const user = new User(req.body);
                         user.save(function(err, us) {
                             if (err) {
-                                res.status(404).json({ message: 'Error saving user' });
+                                return res.status(404).json({ message: 'Ups! Ocurrió un error al crear el usuario.' });
                             } else {
-                                res.json({success: true, user: user});
+                                return res.json({success: true, user: user});
                             }
                         });
                     } else {
-                        res.status(404).send({ message: 'Error encrypting password' });
+                        return res.status(404).send({ message: 'Error encrypting password.' });
                     }
 
                 })
             }
         });
    } catch (err) {
-        res.status(500).send({ message: 'Internal server error' });
+        return res.status(500).send({ message: 'Internal server error' });
     }
 }
 

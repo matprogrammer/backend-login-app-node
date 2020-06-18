@@ -18,8 +18,8 @@ router.get('/users', async res => {
 router.get('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    if (email && password) {
-        userDb.login(email, password, res)
+    if (email != "" && password != "") {
+        userDb.login(email, password, res);
     } else {
         res.status(400).send({ message: 'Param email and password is required' });
     }
@@ -27,8 +27,8 @@ router.get('/login', async (req, res) => {
 
 router.post('/register', function (req, res) {
   const email = req.body.email;
-  if (email) {
-        userDb.register(req, res)
+  if (email != "") {
+        userDb.register(req, res);
     } else {
         res.status(400).send({ message: 'Param email is required' });
     }
