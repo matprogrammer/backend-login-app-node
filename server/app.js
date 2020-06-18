@@ -21,10 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', indexRoutes);
 
-app.use(express.static(__dirname));
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../app/src/app.js'));
 })
+
+app.use(express.static(path.join(__dirname,'../app/public')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '../app/public', 'index.html'));
+});
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
