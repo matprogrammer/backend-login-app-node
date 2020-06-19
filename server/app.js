@@ -16,14 +16,12 @@ mongoose.connect(uri, {
 
 app.set('key', config.key);
 app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', indexRoutes);
-
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
-});
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);

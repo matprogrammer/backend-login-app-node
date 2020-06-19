@@ -12,6 +12,10 @@ router.get('/user/:id', middleware, (req, res) => {
     }
 });
 
+router.get('/',function(req,res){
+    res.render('index');
+});
+
 router.get('/users/', middleware, (req, res) => {
     userDb.getUsers(req, res);
 });
