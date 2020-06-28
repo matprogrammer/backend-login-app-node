@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const config = require('./config/config');
@@ -23,7 +22,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', indexRoutes);
-app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
