@@ -38,7 +38,11 @@ function login(email, password, req, res) {
                     if (match) {
                         const payload = { username: user.username };
                         const token = jwt.sign(payload, req.app.get('key'), { expiresIn: 60 * 60 * 24 });
-                        res.json({success: true, user: user, token: token});
+                        const us = {
+                            id: user.id,
+                            email: user.email,
+                        }
+                        res.json({success: true, user: us, token: token});
                     } else {
                       return res.json({success: false, message: 'La contraseña es incorrecta.'});
                     }
