@@ -6,6 +6,7 @@ const config = require('./config/config');
 const indexRoutes = require('./routes/index')
 const uri = "mongodb+srv://socialdb:maguiar14@socialdb-tt3eo.gcp.mongodb.net/socialdb?retryWrites=true&w=majority";
 const path = require('path');
+const cors = require('cors');
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
 });
+app.use(cors());
 
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
