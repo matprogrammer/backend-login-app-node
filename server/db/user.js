@@ -48,9 +48,9 @@ function login(email, password, req, res) {
                     }
                   });
             } else if (err) {
-                return res.status(404).send({ message: 'El usuario no existe!' });
+                return res.status(200).send({ message: 'El usuario no existe!' });
             } else {
-                return res.status(404).send({ message: 'Email o contraseña incorrecta.' });
+                return res.status(200).send({ message: 'Email o contraseña incorrecta.' });
             }
         });
     } catch (err) {
