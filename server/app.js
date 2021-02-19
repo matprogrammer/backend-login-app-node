@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const config = require('./config/config');
 const indexRoutes = require('./routes/index')
-const uri = "mongodb+srv://socialdb:maguiar14@socialdb-tt3eo.gcp.mongodb.net/socialdb?retryWrites=true&w=majority";
+const uri = "mongoUrl";
 const path = require('path');
 const cors = require('cors');
 
